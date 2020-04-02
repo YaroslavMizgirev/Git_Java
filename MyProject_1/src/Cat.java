@@ -1,22 +1,28 @@
 
 public class Cat {
-	private int weight; //вес кота
-	private String name; //имя кота
-	private String color; //окрас кота
+	private int weight; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	private String name; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	private String color; //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	
-	//кот ест
+	//пїЅпїЅпїЅ пїЅпїЅпїЅ
 	public void eat(){
-		System.out.print("Кот кушает ...\n");
+		System.out.print("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ...\n");
 	}
 	
-	//кот спит
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	public void sleep(){
-		System.out.print("Кот спит ...zz-z-z-z...\n");
+		System.out.print("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ ...zz-z-z-z...\n");
 	}
 	
-	//кот говорит
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	public String speak(String words){ 
-		String phrase = "Кот говорит: " + words + " ...МЯУ...\n";
+		String phrase = "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + words + " ...пїЅпїЅпїЅ...\n";
 		return phrase;
+	}
+	
+	public static void main(String[] args) {
+		Long a = (long) 2;
+		double b = 1 / (double) a;
+		System.out.println(b);
 	}
 }
