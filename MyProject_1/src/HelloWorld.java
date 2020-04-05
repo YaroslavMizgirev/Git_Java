@@ -4,6 +4,11 @@ import java.awt.event.*;
 
 public class HelloWorld extends JFrame{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * @param args
      */
 	JButton b1, b2;
@@ -17,11 +22,11 @@ public class HelloWorld extends JFrame{
 		super(s);
 		setLayout(new FlowLayout());
 		
-		b1 = new JButton("Очистить");
-		b2 = new JButton("Посчитать");
+		b1 = new JButton("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+		b2 = new JButton("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		
-		l1 = new JLabel(" - первое число");
-		l2 = new JLabel(" - второе число");
+		l1 = new JLabel(" - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+		l2 = new JLabel(" - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 		l3 = new JLabel("");
 		l4 = new JLabel("");
 		
@@ -51,7 +56,7 @@ public class HelloWorld extends JFrame{
 
 	public static void main(String[] args) {
 		
-		HelloWorld hw = new HelloWorld("G-гурда");
+		HelloWorld hw = new HelloWorld("G-пїЅпїЅпїЅпїЅпїЅ");
 		hw.setVisible(true);
 		hw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hw.setSize(300, 200);
@@ -65,23 +70,23 @@ public class HelloWorld extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == b2) {
 				if (!CheckStringIsInteger(t1.getText())) {
-					JOptionPane.showMessageDialog(null, "Введите первое целое число!");
+					JOptionPane.showMessageDialog(null, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
 					t1.setText(null);
 					l3.setText("");
 				}
 				else {
 					i = Integer.parseInt(t1.getText());
-					l3.setText("Было - " + i + ", стало - " + (i + 1));
+					l3.setText("пїЅпїЅпїЅпїЅ - " + i + ", пїЅпїЅпїЅпїЅпїЅ - " + (i + 1));
 				}
 				
 				if (!CheckStringIsInteger(t2.getText())) {
-					JOptionPane.showMessageDialog(null, "Введите второе целое число!");
+					JOptionPane.showMessageDialog(null, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
 					t2.setText(null);
 					l4.setText("");
 				}
 				else {
 					k = Integer.parseInt(t2.getText());
-					l4.setText("Было - " + k + ", стало - " + (k + 1));
+					l4.setText("пїЅпїЅпїЅпїЅ - " + k + ", пїЅпїЅпїЅпїЅпїЅ - " + (k + 1));
 				}
 				
 			}
