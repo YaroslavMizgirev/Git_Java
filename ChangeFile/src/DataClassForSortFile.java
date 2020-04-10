@@ -15,6 +15,14 @@ public class DataClassForSortFile implements Comparable<DataClassForSortFile> {
 		this.file = pdfFile;
 		this.fileLastModifyDate = d;
 	}
+	
+	public DataClassForSortFile() {
+		this.fileName = "";
+		this.fileExtension = "";
+		this.fileOrder = 0;
+		this.file = new File("");
+		this.fileLastModifyDate = new Date();
+	}
 
 	public String getFileName() {
 		return fileName;
