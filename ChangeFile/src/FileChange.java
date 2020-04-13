@@ -34,7 +34,7 @@ public class FileChange {
 			dc.setFileExtension(b);
 			dc.setFileOrder(c);
 			dc.setFile(pdfFile);
-			dc.setFileLastModifyDate(d);
+			dc.setFileLastModifyDateOld(d);
 		}
 		return dc;
 	}
@@ -66,7 +66,7 @@ public class FileChange {
 
 	public static void changeInListFileLastModifyDate(ArrayList<DataClassForSortFile> fileList1) {
 		for (DataClassForSortFile tmp: fileList1) {
-			tmp.getFile().setLastModified(tmp.getFileLastModifyDate().getTime());
+			tmp.getFile().setLastModified(tmp.getFileLastModifyDateNew().getTime());
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class FileChange {
 								
 				Calendar cal = getNowCalendar();
 				for (DataClassForSortFile dc1: fileList1) {
-					dc1.setFileLastModifyDate(cal.getTime());
+					dc1.setFileLastModifyDateNew(cal.getTime());
 					cal.add(Calendar.SECOND, 1);
 				}
 				System.out.println("File last modified date change is done.");

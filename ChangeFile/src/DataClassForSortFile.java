@@ -6,14 +6,15 @@ public class DataClassForSortFile implements Comparable<DataClassForSortFile> {
 	private String fileExtension;
 	private int fileOrder;
 	private File file;
-	private Date fileLastModifyDate;
+	private Date fileLastModifyDateOld;
+	private Date fileLastModifyDateNew;
 		
 	public DataClassForSortFile(String a, String b, int c, File pdfFile, Date d) {
 		this.fileName = a;
 		this.fileExtension = b;
 		this.fileOrder = c;
 		this.file = pdfFile;
-		this.fileLastModifyDate = d;
+		this.fileLastModifyDateOld = d;
 	}
 	
 	public DataClassForSortFile() {
@@ -21,7 +22,7 @@ public class DataClassForSortFile implements Comparable<DataClassForSortFile> {
 		this.fileExtension = "";
 		this.fileOrder = 0;
 		this.file = new File("");
-		this.fileLastModifyDate = new Date();
+		this.fileLastModifyDateOld = new Date();
 	}
 
 	public String getFileName() {
@@ -42,21 +43,24 @@ public class DataClassForSortFile implements Comparable<DataClassForSortFile> {
 	public void setFileOrder(int fileOrder) {
 		this.fileOrder = fileOrder;
 	}
-	public Date getFileLastModifyDate() {
-		return fileLastModifyDate;
+	public Date getFileLastModifyDateOld() {
+		return fileLastModifyDateOld;
 	}
-	public void setFileLastModifyDate(Date fileLastModifyDate) {
-		this.fileLastModifyDate = fileLastModifyDate;
+	public void setFileLastModifyDateOld(Date fileLastModifyDateOld) {
+		this.fileLastModifyDateOld = fileLastModifyDateOld;
 	}
+	public Date getFileLastModifyDateNew() {
+		return fileLastModifyDateNew;
+	}
+	public void setFileLastModifyDateNew(Date fileLastModifyDateNew) {
+		this.fileLastModifyDateNew = fileLastModifyDateNew;
+	}
+
 	public File getFile() {
 		return file;
 	}
 	public void setFile(File file) {
 		this.file = file;
-	}
-
-	public String getFileFullName() {
-		return fileName + "." + fileExtension;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -88,6 +89,7 @@ public class Calculator extends JFrame {
 		contentPane.add(label_CalculationDisplay, gbc_label_CalculationDisplay);
 		
 		textJournal = new JTextArea();
+		JScrollPane scroll = new JScrollPane(textJournal, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		textJournal.setEnabled(false);
 		textJournal.addKeyListener(new KeyAdapter() {
 			@Override
@@ -104,7 +106,7 @@ public class Calculator extends JFrame {
 		gbc_textJournal.fill = GridBagConstraints.BOTH;
 		gbc_textJournal.gridx = 4;
 		gbc_textJournal.gridy = 0;
-		contentPane.add(textJournal, gbc_textJournal);
+		contentPane.add(scroll, gbc_textJournal);
 		
 		label_ActionDisplay = new JLabel("0");
 		label_ActionDisplay.addKeyListener(new KeyAdapter() {
