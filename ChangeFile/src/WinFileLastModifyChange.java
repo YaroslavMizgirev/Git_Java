@@ -1,43 +1,38 @@
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
-import java.awt.GridBagLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.TextField;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import javax.swing.JTextArea;
+import java.util.Properties;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 public class WinFileLastModifyChange extends JFrame {
 
@@ -49,6 +44,10 @@ public class WinFileLastModifyChange extends JFrame {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JButton btnNewButton;
+	private UtilDateModel model;
+	private JDatePanelImpl datePanel;
+	private JDatePickerImpl datePicker;
+	private JLabel labelModel;
 	private JButton btnNewButton_1;
 	private JTextArea textArea;
 	private JPopupMenu popupMenu;
@@ -136,23 +135,43 @@ public class WinFileLastModifyChange extends JFrame {
 		/*
 		 * Поле календаря для выбора даты и времени изменения файлов
 		 */
-		//UtilDateModel model = new UtilDateModel();
-		//JDatePanelImpl datePanel = new JDatePanelImpl(model, null);
-		//JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
-		//datePicker.setFont(new Font("Arial", Font.PLAIN, 20));
-		//GridBagConstraints gbc_datePicker = new GridBagConstraints();
-		//gbc_datePicker.gridwidth = 2;
-		//gbc_datePicker.insets = new Insets(0, 0, 0, 5);
-		//gbc_datePicker.fill = GridBagConstraints.BOTH;
-		//gbc_datePicker.gridx = 0;
-		//gbc_datePicker.gridy = 2;
-		//contentPane.add(datePicker, gbc_datePicker);
-		//frame.add(datePicker);
+		model = new UtilDateModel();
+		//
+		//Properties p = new Properties();
+		//p.put("text.today", "today");
+		//p.put("text.month", "month");
+		//p.put("text.year", "year");
+		//
+		datePanel = new JDatePanelImpl(model, new Properties());
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_datePicker = new GridBagConstraints();
+		gbc_datePicker.insets = new Insets(5, 5, 5, 5);
+		gbc_datePicker.fill = GridBagConstraints.BOTH;
+		gbc_datePicker.gridx = 0;
+		gbc_datePicker.gridy = 2;
+		contentPane.add(datePicker, gbc_datePicker);
 		
+		labelModel = new JLabel(" - дата изменения файлов.");
+		labelModel.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_labelModel = new GridBagConstraints();
+		gbc_labelModel.insets = new Insets(5, 5, 5, 5);
+		gbc_labelModel.gridx = 1;
+		gbc_labelModel.gridy = 2;
+		contentPane.add(labelModel, gbc_labelModel);
+
 		btnNewButton_1 = new JButton("Упорядочить по нумерации файлов");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SortFiles();
+				if (datePicker.getModel().getValue() != null) {
+					Calendar selectedValue = Calendar.getInstance();
+					Date d = (Date) datePicker.getModel().getValue();
+					selectedValue.setTime(d);
+					SortFiles(selectedValue);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Value file last modified data must be not empty.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -186,7 +205,6 @@ public class WinFileLastModifyChange extends JFrame {
 		gbc_textArea.fill = GridBagConstraints.BOTH;
 		gbc_textArea.gridx = 0;
 		gbc_textArea.gridy = 4;
-		//contentPane.add(scroll);
 		contentPane.add(scroll, gbc_textArea);
 	}
 
@@ -199,13 +217,13 @@ public class WinFileLastModifyChange extends JFrame {
 	public static DataClassForSortFile getVariableDataClassForSortFile(File pdfFile) {
 		String a = "", b = "";
 		int c = 0;
-		Date d;
+		Long d;
 		DataClassForSortFile dc = new DataClassForSortFile();
 		
 		if (pdfFile.getName().indexOf("_") >= 0) {
 			a = pdfFile.getName().substring(0, pdfFile.getName().length() - 4);
 			b = pdfFile.getName().substring(pdfFile.getName().length() - 3, pdfFile.getName().length());
-			d = new Date(pdfFile.lastModified());
+			d = pdfFile.lastModified();
 			for (String zzzTemp: a.split("-")) {
 				if (zzzTemp.indexOf("_") >= 0) {
 					c = Integer.parseInt(zzzTemp.substring(zzzTemp.length() - 3, zzzTemp.length()));
@@ -257,7 +275,8 @@ public class WinFileLastModifyChange extends JFrame {
 		return r;
 	}
 
-	public void SortFiles() {
+	public void SortFiles(Calendar d) {
+		
 		if (textField.getText().length() > 0) {
 			File dir = new File(textField.getText());
 			if (dir.exists()) {
@@ -276,10 +295,10 @@ public class WinFileLastModifyChange extends JFrame {
 					Collections.sort(fileList1);
 					addJournalEntry(System.lineSeparator());
 					addJournalEntry("File list sorted." + System.lineSeparator());
-					Calendar cal = Calendar.getInstance();
+					//Calendar cal = Calendar.getInstance();
 					for (DataClassForSortFile dc1: fileList1) {
-						dc1.setFileLastModifyDateNew(cal.getTime());
-						cal.add(Calendar.SECOND, 1);
+						dc1.setFileLastModifyDateNew(d.getTimeInMillis());
+						d.add(Calendar.SECOND, 1);
 					}
 					changeInListFileLastModifyDate(fileList1);
 					addJournalEntry("Table 1. Report for file last modified dates." + System.lineSeparator());

@@ -46,14 +46,14 @@ public class DataClassForSortFile implements Comparable<DataClassForSortFile> {
 	public Date getFileLastModifyDateOld() {
 		return fileLastModifyDateOld;
 	}
-	public void setFileLastModifyDateOld(Date fileLastModifyDateOld) {
-		this.fileLastModifyDateOld = fileLastModifyDateOld;
+	public void setFileLastModifyDateOld(Long fileLastModifyDateOld) {
+		this.fileLastModifyDateOld = new Date(fileLastModifyDateOld);
 	}
 	public Date getFileLastModifyDateNew() {
 		return fileLastModifyDateNew;
 	}
-	public void setFileLastModifyDateNew(Date fileLastModifyDateNew) {
-		this.fileLastModifyDateNew = fileLastModifyDateNew;
+	public void setFileLastModifyDateNew(Long fileLastModifyDateNew) {
+		this.fileLastModifyDateNew = new Date(fileLastModifyDateNew);
 	}
 
 	public File getFile() {
